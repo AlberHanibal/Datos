@@ -1,0 +1,2 @@
+excepcionpropia.Excepcionpropia
+excepcionpropia.ExcepionIntervalo
