@@ -62,17 +62,20 @@ public class AlbertoColmenarOperacionesFichero {
         }
     }
     
-    // crear directorio dado un nombre, comprobar si existe, crear 2 files vacios y renombrar uno
-    // mkdir(), createNewFile(), en un try catch
     public static void crearDirectorio(String nombreDir) {
+        try {
         File dir = new File(nombreDir);
         if (!dir.exists()){
             dir.mkdir();
-        }
-        try {           
-            dir.createNewFile();
+            File fichero1 = new File(dir, "fichero1.txt");
+            fichero1.createNewFile();
+            File fichero2 = new File(dir, "fichero2.txt");
+            fichero2.createNewFile();
+            File fichero3 = new File(dir, "ficheroRenombrado.txt");
+            fichero1.renameTo(fichero3);
+        }    
         } catch (IOException ex) {
-            Logger.getLogger(AlbertoColmenarOperacionesFichero.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al crear el fichero/directorio");
         }
     }
     
