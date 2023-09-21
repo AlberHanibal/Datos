@@ -6,6 +6,9 @@
 package albertocolmenaroperacionesfichero;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,9 +20,11 @@ public class AlbertoColmenarOperacionesFichero {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        File f = new File("../prueba.txt");
-        mostrarInformacionFichero(f);
+        File f = new File("../prueba");
+        //mostrarInformacionFichero(f);
         //listarFicheros(f);
+        //borrarDirectorio(f);
+        borrarDirectorioRecursivo(f);
     }
     
     public static void listarFicheros(File f) {
@@ -59,4 +64,40 @@ public class AlbertoColmenarOperacionesFichero {
     
     // crear directorio dado un nombre, comprobar si existe, crear 2 files vacios y renombrar uno
     // mkdir(), createNewFile(), en un try catch
+    public static void crearDirectorio(String nombreDir) {
+        File dir = new File(nombreDir);
+        if (!dir.exists()){
+            dir.mkdir();
+        }
+        try {           
+            dir.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(AlbertoColmenarOperacionesFichero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void borrarDirectorio(File dir) {
+        if (dir.exists()) {
+            File[] ficheros = dir.listFiles();
+            for (int x = 0; x < ficheros.length; x++) {
+                ficheros[x].delete();
+            }
+            dir.delete();
+        }
+        System.out.format("El directorio %s ha sido borrado%n", dir.getName());
+    }
+    
+    public static void borrarDirectorioRecursivo(File dir) {
+        if (dir.isDirectory()) {
+            File[] ficheros = dir.listFiles();
+            for (int x = 0; x < ficheros.length; x++) {
+                if (ficheros[x].isDirectory()) {
+                    borrarDirectorioRecursivo(ficheros[x]);
+                }
+                ficheros[x].delete();
+            }
+            dir.delete();
+        }
+        System.out.format("El directorio %s ha sido borrado%n", dir.getName());
+    }
 }
