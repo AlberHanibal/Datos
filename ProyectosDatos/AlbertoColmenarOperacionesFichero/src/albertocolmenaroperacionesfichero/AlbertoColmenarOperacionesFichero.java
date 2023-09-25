@@ -7,6 +7,7 @@ package albertocolmenaroperacionesfichero;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  *
@@ -18,11 +19,46 @@ public class AlbertoColmenarOperacionesFichero {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        File f = new File("../prueba");
+        Scanner sc = new Scanner(System.in);
+        File fichero = null;
+        System.out.format("1. Mostrar directorio.%n"
+                + "2. Mostrar información del fichero.%n"
+                + "3. Crear directorio y 2 archivos.%n"
+                + "4. Borrar directorio.%n"
+                + "5. Borrar directorio recursivo.%n"
+                + "¿Qué quieres hacer? ");
+        int opcion = Integer.parseInt(sc.nextLine());
+        switch (opcion) {
+            case 1:
+                System.out.println("Nombre del directorio.");
+                fichero = new File(sc.nextLine());
+                System.out.println(fichero);
+                listarFicheros(fichero);
+            break;
+            case 2:
+                System.out.println("Nombre del fichero.");
+                fichero = new File(sc.nextLine());
+                mostrarInformacionFichero(fichero);
+            break;
+            case 3:
+                System.out.println("Ruta del directorio.");
+                crearDirectorio(sc.nextLine());
+            break;
+            case 4:
+                System.out.println("Nombre del directorio.");
+                fichero = new File(sc.nextLine());
+                borrarDirectorio(fichero);
+            break;
+            case 5:
+                System.out.println("Nombre del directorio.");
+                fichero = new File(sc.nextLine());
+                borrarDirectorioRecursivo(fichero);
+            break;
+        }
         //mostrarInformacionFichero(f);
         //listarFicheros(f);
         //borrarDirectorio(f);
-        borrarDirectorioRecursivo(f);
+        //borrarDirectorioRecursivo(f);
     }
     
     public static void listarFicheros(File f) {
