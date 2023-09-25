@@ -32,7 +32,6 @@ public class AlbertoColmenarOperacionesFichero {
             case 1:
                 System.out.println("Nombre del directorio.");
                 fichero = new File(sc.nextLine());
-                System.out.println(fichero);
                 listarFicheros(fichero);
             break;
             case 2:
