@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<agenda>
+    <anotacion>
+        <nombre>Alicia</nombre>
+        <direccion>Avda, de Europa, 25</direccion>
+        <poblacion>Fuenlabrada</poblacion>
+        <telefono>789654325</telefono>
+    </anotacion>
+    <anotacion>
+        <nombre>Luis</nombre>
+        <direccion>Avda. de España, 2</direccion>
+        <poblacion>Fuenlabrada</poblacion>
+        <telefono>767554399</telefono>
+    </anotacion>
+    <anotacion>
+        <nombre>Sebastian</nombre>
+        <direccion>Gran Vía, 33</direccion>
+        <poblacion>Madrid</poblacion>
+        <telefono>654654877</telefono>
+    </anotacion>
+</agenda>

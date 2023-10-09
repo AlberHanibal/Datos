@@ -56,9 +56,10 @@ public class AlbertoColmenarGestionPersonas {
                         case 1:
                             System.out.print("Dame un dni: ");
                             String dni = sc.nextLine();
-                            mostrarDatosDni(fichero, dni);
+                            System.out.println(mostrarDatosDni(fichero, dni));
                             break;
                         case 2:
+                            System.out.println(mostrarPersonaVieja(fichero));
                             break;
                         case 3:
                             break;
@@ -127,5 +128,24 @@ public class AlbertoColmenarGestionPersonas {
             System.out.println("Error en el fichero" + ex.getMessage());
         }
         return "-1";
+    }
+    
+    private static String mostrarPersonaVieja(File fichero) {
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(new FileInputStream(fichero));
+            Persona personaVieja = null;
+            Persona persona = null;
+        } catch (EOFException ex) {
+            System.out.println("Se ha leído el fichero" + ex.getMessage());
+        } catch (FileNotFoundException ex) {
+            System.out.println("No se encuentra el fichero" + ex.getMessage());
+        //} catch (ClassNotFoundException ex) {
+        //    System.out.println("Error con la clase persona" + ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Error en el fichero" + ex.getMessage());
+        }
+        
+        return "";
     }
 }
