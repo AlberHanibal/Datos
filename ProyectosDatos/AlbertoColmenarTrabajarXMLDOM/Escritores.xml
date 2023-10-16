@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escritores>
+    <escritor>
+        <nombre>Mario Vargas LLosa</nombre>
+        <nacimiento>28 de Marzo de 1936</nacimiento>
+    </escritor>
+    <escritor>
+        <nombre>Milan Kundera</nombre>
+        <nacimiento>1 de Abril de 1929</nacimiento>
+    </escritor>
+        <escritor>
+        <nombre>Isabel Allende</nombre>
+    <nacimiento>2 de Agosto de 1942</nacimiento>
+    </escritor>
+</escritores>
