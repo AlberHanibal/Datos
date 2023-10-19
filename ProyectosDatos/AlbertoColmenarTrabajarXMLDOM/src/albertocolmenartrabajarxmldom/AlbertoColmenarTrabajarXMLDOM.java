@@ -3,9 +3,19 @@ package albertocolmenartrabajarxmldom;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -45,8 +55,16 @@ public class AlbertoColmenarTrabajarXMLDOM {
                     informacionEscritor(documento, nombre);
                     break;
                 case 3:
+                    System.out.print("Dame el nombre del escritor: ");
+                    String nombreEscritor = sc.nextLine();
+                    System.out.print("Dame la fecha de nacimiento del escritor: ");
+                    String nacimiento = sc.nextLine();
+                    annadirEscritor(documento, nombreEscritor, nacimiento);
                     break;
                 case 4:
+                    System.out.println("Dame el nombre o el nacimiento del escritor");
+                    String etiqueta = sc.nextLine();
+                    borrarEscritor(documento, etiqueta);
                     break;
             }
 
@@ -92,7 +110,53 @@ public class AlbertoColmenarTrabajarXMLDOM {
                 }
             }
         }
-
+    }
+    
+    public static void annadirEscritor(Document doc, String nombre, String nacimiento) {
+        try {
+            Element raiz = doc.getDocumentElement();
+            Element escritor = doc.createElement("escritor");
+            Element nombreEscritor = doc.createElement("nombre");
+            nombreEscritor.appendChild(doc.createTextNode(nombre));
+            Element nacEscritor = doc.createElement("nacimiento");
+            nacEscritor.appendChild(doc.createTextNode(nacimiento));
+            escritor.appendChild(nombreEscritor);
+            escritor.appendChild(nacEscritor);
+            raiz.appendChild(escritor);
+            
+            Source source = new DOMSource(doc);
+            Result result = new StreamResult(new File("Escritores.xml"));
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, result);
+        } catch (TransformerException ex) {
+            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void borrarEscritor(Document doc, String etiqueta) {
+        try {
+            Element raiz = doc.getDocumentElement();
+            NodeList escritores = raiz.getElementsByTagName("escritor");
+            for (int i = 0; i < escritores.getLength(); i++) {
+                if (escritores.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                    NodeList hijosEscritor = escritores.item(i).getChildNodes();
+                    for (int j = 0; j < hijosEscritor.getLength(); j++) {
+                        if (hijosEscritor.item(j).getTextContent().equals(etiqueta)) {
+                            raiz.removeChild(escritores.item(i));
+                            break;
+                        }
+                    }
+                }
+            }
+            Source source = new DOMSource(doc);
+            Result result = new StreamResult(new File("Escritores.xml"));
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, result);
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
