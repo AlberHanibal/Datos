@@ -1,5 +1,6 @@
 package albertocolmenargestionpersonas;
 
+import com.thoughtworks.xstream.XStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +29,15 @@ public class AlbertoColmenarGestionPersonas {
         String opcion = "";
         if (!fichero.exists()) {
             crearFicheroPersonas(fichero);
+            //cositas
+            XStream xstream = new XStream();
+            ArrayList<Persona> lista = new ArrayList<>();
+            volcadoALista(fichero, lista);
+            try {
+                xstream.toXML(lista, new FileOutputStream("Personas.xml"));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             System.out.print("El fichero ya existe, ¿desea sobreescribirlo? (s/n) ");
             opcion = sc.nextLine();
@@ -117,8 +128,8 @@ public class AlbertoColmenarGestionPersonas {
             if (encontrado) {
                 return persona.toString();
                 //falta sacarlo
-            }        
-        }  catch (EOFException ex) {
+            }
+        } catch (EOFException ex) {
             System.out.println("Se ha leído el fichero" + ex.getMessage());
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero" + ex.getMessage());
@@ -129,7 +140,7 @@ public class AlbertoColmenarGestionPersonas {
         }
         return "-1";
     }
-    
+
     private static String mostrarPersonaVieja(File fichero) {
         ObjectInputStream ois = null;
         try {
@@ -140,12 +151,33 @@ public class AlbertoColmenarGestionPersonas {
             System.out.println("Se ha leído el fichero" + ex.getMessage());
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero" + ex.getMessage());
-        //} catch (ClassNotFoundException ex) {
-        //    System.out.println("Error con la clase persona" + ex.getMessage());
+            //} catch (ClassNotFoundException ex) {
+            //    System.out.println("Error con la clase persona" + ex.getMessage());
         } catch (IOException ex) {
             System.out.println("Error en el fichero" + ex.getMessage());
         }
-        
+
         return "";
     }
+    
+    // no probado
+    public static void volcadoALista(File f, ArrayList<Persona> lista) {
+        try {
+            ObjectInputStream ois;
+            Persona p;
+            ois = new ObjectInputStream(new FileInputStream(f));
+            while (true) {
+                p = (Persona) ois.readObject();
+                lista.add(p);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    // falta volcadoAFichero
 }

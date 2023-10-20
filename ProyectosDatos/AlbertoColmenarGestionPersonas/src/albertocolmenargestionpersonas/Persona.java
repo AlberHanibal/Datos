@@ -6,8 +6,8 @@ import java.io.Serializable;
  *
  * @author DAM2A-03
  */
-public class Persona  implements Serializable{
-    
+public class Persona implements Serializable {
+
     private String dni;
     private String nombre;
     private int edad;
@@ -46,5 +46,5 @@ public class Persona  implements Serializable{
     public String toString() {
         return "Persona{" + "dni=" + dni + ", nombre=" + nombre + ", edad=" + edad + '}';
     }
-    
+
 }

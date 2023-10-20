@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<desayuno>
+    <comida>
+        <nombre>Chocolate con churros</nombre>
+        <precio>5.95€</precio>
+        <descripcion>
+            Una taza de Chocolate con leche y dos churros
+        </descripcion>
+        <calorias>850</calorias>
+    </comida>
+    <comida>
+        <nombre>Café con tostadas</nombre>
+        <precio>4.95€</precio>
+        <descripcion>
+            Una taza de Café con leche y dos tostadas
+        </descripcion>
+        <calorias>550</calorias>
+    </comida>
+    <comida>
+        <nombre>zumo de frutas</nombre>
+        <precio>2.65€</precio>
+        <descripcion>
+            Un vaso de zumo de frutas a elegir entre naranja, pomelo o multifruta.
+        </descripcion>
+        <calorias>150</calorias>
+    </comida>
+</desayuno>
