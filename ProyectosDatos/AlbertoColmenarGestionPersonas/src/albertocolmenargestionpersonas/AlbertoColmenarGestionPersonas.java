@@ -10,9 +10,18 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 /**
  *
@@ -29,15 +38,6 @@ public class AlbertoColmenarGestionPersonas {
         String opcion = "";
         if (!fichero.exists()) {
             crearFicheroPersonas(fichero);
-            //cositas
-            XStream xstream = new XStream();
-            ArrayList<Persona> lista = new ArrayList<>();
-            volcadoALista(fichero, lista);
-            try {
-                xstream.toXML(lista, new FileOutputStream("Personas.xml"));
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
-            }
         } else {
             System.out.print("El fichero ya existe, ¿desea sobreescribirlo? (s/n) ");
             opcion = sc.nextLine();
@@ -45,7 +45,17 @@ public class AlbertoColmenarGestionPersonas {
                 crearFicheroPersonas(fichero);
             }
         }
-
+        XStream xstream = new XStream();
+        ArrayList<Persona> lista = new ArrayList<>();
+        volcadoALista(fichero, lista);
+        try {
+            xstream.alias("Datos", Persona.class);
+            xstream.alias("ListadoPersonas", List.class);
+            xstream.toXML(lista, new FileOutputStream("Personas.xml"));
+        } catch (FileNotFoundException ex) {
+            System.err.println(ex.getMessage());
+        }
+        crearHTML();
         int menu;
         do {
             System.out.format("1. Consultas.%n"
@@ -108,6 +118,7 @@ public class AlbertoColmenarGestionPersonas {
             for (int i = 0; i < dnis.length; i++) {
                 oos.writeObject(new Persona(dnis[i], nombres[i], edades[i]));
             }
+            oos.close();
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero" + ex.getMessage());
         } catch (IOException ex) {
@@ -160,7 +171,6 @@ public class AlbertoColmenarGestionPersonas {
         return "";
     }
     
-    // no probado
     public static void volcadoALista(File f, ArrayList<Persona> lista) {
         try {
             ObjectInputStream ois;
@@ -170,14 +180,37 @@ public class AlbertoColmenarGestionPersonas {
                 p = (Persona) ois.readObject();
                 lista.add(p);
             }
+        } catch (EOFException eof){        
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
         }
     }
     
-    // falta volcadoAFichero
+    public static void volcadoAFichero(File f, ArrayList<Persona> lista) {
+        //ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
+        
+    }
+    
+    public static void crearHTML() {
+        FileOutputStream os = null;
+        try {
+            os = new FileOutputStream(new File("Personas.html"));
+            Source estilos = new StreamSource("personas.xsl");
+            Source datos = new StreamSource("personas.xml");
+            Result result = new StreamResult(os);
+            Transformer transformer = TransformerFactory.newInstance().newTransformer(estilos);
+            transformer.transform(datos, result);
+        } catch (FileNotFoundException ex) {
+            System.err.println(ex.getMessage());
+        } catch (TransformerConfigurationException ex) {
+            System.err.println(ex.getMessage());
+        } catch (TransformerException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
 }
+
