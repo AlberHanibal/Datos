@@ -45,16 +45,10 @@ public class AlbertoColmenarGestionPersonas {
                 crearFicheroPersonas(fichero);
             }
         }
-        XStream xstream = new XStream();
         ArrayList<Persona> lista = new ArrayList<>();
         volcadoALista(fichero, lista);
-        try {
-            xstream.alias("Datos", Persona.class);
-            xstream.alias("ListadoPersonas", List.class);
-            xstream.toXML(lista, new FileOutputStream("Personas.xml"));
-        } catch (FileNotFoundException ex) {
-            System.err.println(ex.getMessage());
-        }
+        listadoCompleto(lista);
+        crearXML(fichero);
         crearHTML();
         int menu;
         do {
@@ -69,7 +63,7 @@ public class AlbertoColmenarGestionPersonas {
                             + "Consultas.%n"
                             + "     1. Mostrar los datos de una persona dado su DNI.%n"
                             + "     2. Mostrar los datos de la Persona con mayor edad en el fichero.%n"
-                            + "     3. Listado de Personas comprendidas en un rando de edades.%n"
+                            + "     3. Listado de Personas comprendidas en un rango de edades.%n"
                             + "     4. Media de edad en el fichero.%n"
                             + "     5. Salir del submenú.%n");
                     submenu = Integer.parseInt(sc.nextLine());
@@ -152,18 +146,29 @@ public class AlbertoColmenarGestionPersonas {
         return "-1";
     }
 
+    // sin terminar
     private static String mostrarPersonaVieja(File fichero) {
         ObjectInputStream ois = null;
         try {
             ois = new ObjectInputStream(new FileInputStream(fichero));
             Persona personaVieja = null;
             Persona persona = null;
+            persona = (Persona) ois.readObject();
+            personaVieja = persona;
+            while (true) {
+                persona = (Persona) ois.readObject();
+                if (persona.getEdad() > personaVieja.getEdad()) {
+                    personaVieja = persona;
+                }
+            }
+            //return personaVieja.toString();
+            
         } catch (EOFException ex) {
             System.out.println("Se ha leído el fichero" + ex.getMessage());
         } catch (FileNotFoundException ex) {
             System.out.println("No se encuentra el fichero" + ex.getMessage());
-            //} catch (ClassNotFoundException ex) {
-            //    System.out.println("Error con la clase persona" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error con la clase persona" + ex.getMessage());
         } catch (IOException ex) {
             System.out.println("Error en el fichero" + ex.getMessage());
         }
@@ -191,8 +196,31 @@ public class AlbertoColmenarGestionPersonas {
     }
     
     public static void volcadoAFichero(File f, ArrayList<Persona> lista) {
-        //ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
-        
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(new FileOutputStream(f));
+            for (Persona persona : lista) {
+                oos.writeObject(persona);
+            }
+            oos.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void crearXML(File fichero) {
+        XStream xstream = new XStream();
+        ArrayList<Persona> lista = new ArrayList<>();
+        volcadoALista(fichero, lista);
+        try {
+            xstream.alias("Datos", Persona.class);
+            xstream.alias("ListadoPersonas", List.class);
+            xstream.toXML(lista, new FileOutputStream("Personas.xml"));
+        } catch (FileNotFoundException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
     
     public static void crearHTML() {
@@ -211,6 +239,12 @@ public class AlbertoColmenarGestionPersonas {
         } catch (TransformerException ex) {
             System.err.println(ex.getMessage());
         }
+    }
+    
+    public static void listadoCompleto(ArrayList<Persona> lista) {
+        for (Persona persona : lista) {
+                System.out.println(persona);
+            }
     }
 }
 
