@@ -1,0 +1,27 @@
+{ "datos":[
+{
+    "nombre":"Alicia",
+        "apellidos":"Calvo Rosas",
+        "tel":["11111","22222","33333"],
+        "email":"alicia.calvo@gmail.com",
+        "edad":30,
+        "direccion":{
+            "calle":"Homero, 22",
+            "poblacion":"Mostoles",
+            "provincia":"Madrid"
+            }
+},
+{
+    "nombre":"Ana",
+        "apellidos":"Perez Garcia",
+        "tel":["121212","232323","343434"],
+        "email":"anapeg@gmail.com",
+        "edad":32,
+        "direccion":{
+            "calle":"Venus, 10",
+            "poblacion":"Mostoles",
+            "provincia":"Madrid"
+            }
+}
+]
+}
