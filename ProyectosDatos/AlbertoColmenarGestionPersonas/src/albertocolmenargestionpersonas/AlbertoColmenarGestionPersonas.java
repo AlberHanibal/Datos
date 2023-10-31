@@ -148,33 +148,17 @@ public class AlbertoColmenarGestionPersonas {
 
     // sin terminar
     private static String mostrarPersonaVieja(File fichero) {
-        ObjectInputStream ois = null;
-        try {
-            ois = new ObjectInputStream(new FileInputStream(fichero));
-            Persona personaVieja = null;
-            Persona persona = null;
-            persona = (Persona) ois.readObject();
-            personaVieja = persona;
-            while (true) {
-                persona = (Persona) ois.readObject();
-                if (persona.getEdad() > personaVieja.getEdad()) {
-                    personaVieja = persona;
-                }
+        ArrayList<Persona> lista = new ArrayList<>();
+        volcadoALista(fichero, lista);
+        Persona personaVieja = lista.get(0);
+        for (Persona persona : lista) {
+            if (persona.getEdad() > personaVieja.getEdad()) {
+                personaVieja = persona;
             }
-            //return personaVieja.toString();
-            
-        } catch (EOFException ex) {
-            System.out.println("Se ha leído el fichero" + ex.getMessage());
-        } catch (FileNotFoundException ex) {
-            System.out.println("No se encuentra el fichero" + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Error con la clase persona" + ex.getMessage());
-        } catch (IOException ex) {
-            System.out.println("Error en el fichero" + ex.getMessage());
         }
-
-        return "";
+        return personaVieja.toString();
     }
+   
     
     public static void volcadoALista(File f, ArrayList<Persona> lista) {
         try {

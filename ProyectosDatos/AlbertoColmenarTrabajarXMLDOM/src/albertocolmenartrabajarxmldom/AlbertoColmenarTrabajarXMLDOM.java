@@ -41,8 +41,9 @@ public class AlbertoColmenarTrabajarXMLDOM {
             Scanner sc = new Scanner(System.in);
             System.out.format("1. Listado de todos los escritores.%n"
                     + "2. Datos de un escritor.%n"
-                    + "3. Annadir un escritor.%n"
-                    + "4. Borrar un escritor.%n");
+                    + "3. Añadir un escritor.%n"
+                    + "4. Borrar un escritor.%n"
+                    + "5. Añadir un nuevo nodo.%n");
             int opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
@@ -65,6 +66,9 @@ public class AlbertoColmenarTrabajarXMLDOM {
                     System.out.println("Dame el nombre o el nacimiento del escritor");
                     String etiqueta = sc.nextLine();
                     borrarEscritor(documento, etiqueta);
+                    break;
+                case 5:
+                    annadirNodo(documento);
                     break;
             }
 
@@ -146,6 +150,35 @@ public class AlbertoColmenarTrabajarXMLDOM {
                             break;
                         }
                     }
+                }
+            }
+            Source source = new DOMSource(doc);
+            Result result = new StreamResult(new File("Escritores.xml"));
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, result);
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void annadirNodo(Document doc) {
+        try {
+            Element raiz = doc.getDocumentElement();
+            NodeList escritores = raiz.getElementsByTagName("escritor");
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Dame el nombre del nuevo nodo");
+            String nombreNodo = sc.nextLine();
+            for (int i = 0; i < escritores.getLength(); i++) {
+                if (escritores.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                    Node escritor = escritores.item(i);
+                    System.out.println("Nodo: " + escritor.getTextContent());
+                    System.out.println("Dame su nueva información");
+                    String info = sc.nextLine();
+                    Element nuevaInfo = doc.createElement(nombreNodo);
+                    nuevaInfo.appendChild(doc.createTextNode(info));
+                    escritor.appendChild(nuevaInfo);
                 }
             }
             Source source = new DOMSource(doc);
