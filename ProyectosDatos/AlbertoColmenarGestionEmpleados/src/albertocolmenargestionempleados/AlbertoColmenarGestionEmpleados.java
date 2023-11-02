@@ -93,6 +93,7 @@ public class AlbertoColmenarGestionEmpleados {
         }   
     }
     
+    // Dado el fichero binario de empleados y un número de empleados muestra la información de ese empleado
     public static void visualizarEmpleado(File fichero, int numEmpleado) {
         RandomAccessFile raf = null;
         try {
@@ -103,7 +104,7 @@ public class AlbertoColmenarGestionEmpleados {
                 int numEmp = raf.readInt();
                 int numDepart = raf.readInt();
                 double salario = raf.readDouble();
-                System.out.format("El empleado %d está en el departamento %d y cobra %.0f€%n", numEmpleado, numDepart, salario);
+                System.out.format("El empleado %d está en el departamento %d y cobra %.0f€%n", numEmp, numDepart, salario);
             } else {
                 System.out.println("El empleado no existe.");
             }
