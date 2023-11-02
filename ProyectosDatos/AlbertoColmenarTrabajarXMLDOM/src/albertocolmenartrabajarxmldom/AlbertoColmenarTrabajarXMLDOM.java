@@ -133,7 +133,7 @@ public class AlbertoColmenarTrabajarXMLDOM {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.transform(source, result);
         } catch (TransformerException ex) {
-            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         }
     }
     
@@ -157,12 +157,14 @@ public class AlbertoColmenarTrabajarXMLDOM {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.transform(source, result);
         } catch (TransformerConfigurationException ex) {
-            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         } catch (TransformerException ex) {
-            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         }
     }
     
+    /* Dado el documento Escritores.xml, pide un nuevo dato y muestra y añade la nueva 
+    información al xml*/
     public static void annadirNodo(Document doc) {
         try {
             Element raiz = doc.getDocumentElement();
@@ -186,9 +188,9 @@ public class AlbertoColmenarTrabajarXMLDOM {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.transform(source, result);
         } catch (TransformerConfigurationException ex) {
-            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         } catch (TransformerException ex) {
-            Logger.getLogger(AlbertoColmenarTrabajarXMLDOM.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         }
     }
 
