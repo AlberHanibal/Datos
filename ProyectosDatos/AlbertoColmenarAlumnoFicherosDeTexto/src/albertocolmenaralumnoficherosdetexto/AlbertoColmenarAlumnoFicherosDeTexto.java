@@ -65,6 +65,9 @@ public class AlbertoColmenarAlumnoFicherosDeTexto {
         }
     }
     
+    // Clase File para crear el fichero provincias.txt
+    // Clase PrintWriter para escribir en el fichero. Método print() para ir escribiendo las provincias cuando se va recorriendo la lista.
+    // crea el fichero provincias.txt con la lista de provincias del propio método.
     public static void escribirProvincias() {
         PrintWriter texto = null;
         try {
@@ -81,6 +84,9 @@ public class AlbertoColmenarAlumnoFicherosDeTexto {
         }
     }
     
+    
+    // Clase Scanner: para ir recorriendo el fichero con el método hasNext() (para el while) y next()
+    // búsqueda en el fichero de la provincia pasada por parámetro
     public static void encontrarProvincia(File fichero, String provincia) {
         try {
             Scanner sc = new Scanner(fichero);

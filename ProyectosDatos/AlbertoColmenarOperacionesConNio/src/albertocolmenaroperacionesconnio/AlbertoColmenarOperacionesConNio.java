@@ -20,10 +20,6 @@ public class AlbertoColmenarOperacionesConNio {
     public static void main(String[] args) {
         Path ruta1 = null;
         Path ruta2 = null;
-        //copiarFichero(ruta1, ruta2);
-        //moverFichero(ruta1, ruta2);
-        //mostrarFichero(ruta1);
-        //mostrarInformacionFichero(ruta1);
         Scanner sc = new Scanner(System.in);
         File fichero = null;
         System.out.format("1. Copiar fichero.%n"
@@ -61,6 +57,10 @@ public class AlbertoColmenarOperacionesConNio {
         
     }
     
+    // Clase Paths: para crear las rutas y método get() dado la ruta como string.
+    // Clase Files: método exists() para comprobar que existe el fichero y copy() para copiarlo en la otra ruta. 
+    // dado 2 variables Path, una con el Path del fichero que quieres copiar 
+    //y otra con el Path donde lo quieres copiar.
     public static void copiarFichero(Path ficheroACopiar, Path ficheroCopia) {
         try {
             if (Files.exists(ficheroACopiar)) {

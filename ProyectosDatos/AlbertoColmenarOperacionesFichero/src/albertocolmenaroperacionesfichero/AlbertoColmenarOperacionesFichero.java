@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package albertocolmenaroperacionesfichero;
 
 import java.io.File;
@@ -54,10 +49,6 @@ public class AlbertoColmenarOperacionesFichero {
                 borrarDirectorioRecursivo(fichero);
             break;
         }
-        //mostrarInformacionFichero(f);
-        //listarFicheros(f);
-        //borrarDirectorio(f);
-        //borrarDirectorioRecursivo(f);
     }
     
     public static void listarFicheros(File f) {
@@ -123,6 +114,8 @@ public class AlbertoColmenarOperacionesFichero {
         System.out.format("El directorio %s ha sido borrado%n", dir.getName());
     }
     
+    // Clase File para el directorio y el método listFiles() para hacer una lista de files y recorrerlo para ir borrándolos.
+    // dado un File (directorio) borra los directorios y ficheros del File
     public static void borrarDirectorioRecursivo(File dir) {
         if (dir.isDirectory()) {
             File[] ficheros = dir.listFiles();
@@ -131,6 +124,7 @@ public class AlbertoColmenarOperacionesFichero {
                     borrarDirectorioRecursivo(ficheros[x]);
                 }
                 ficheros[x].delete();
+                // falta mostrar los ficheros borrados
             }
             dir.delete();
         }
