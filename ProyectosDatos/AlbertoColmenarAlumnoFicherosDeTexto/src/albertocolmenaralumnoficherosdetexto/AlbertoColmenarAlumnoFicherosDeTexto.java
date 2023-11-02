@@ -83,10 +83,7 @@ public class AlbertoColmenarAlumnoFicherosDeTexto {
             texto.close();
         }
     }
-    
-    
-    // Clase Scanner: para ir recorriendo el fichero con el método hasNext() (para el while) y next()
-    // búsqueda en el fichero de la provincia pasada por parámetro
+    // Búsqueda en el fichero de la provincia pasada por parámetro
     public static void encontrarProvincia(File fichero, String provincia) {
         try {
             Scanner sc = new Scanner(fichero);
