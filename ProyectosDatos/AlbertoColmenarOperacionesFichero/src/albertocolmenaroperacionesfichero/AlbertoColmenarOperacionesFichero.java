@@ -114,8 +114,8 @@ public class AlbertoColmenarOperacionesFichero {
         System.out.format("El directorio %s ha sido borrado%n", dir.getName());
     }
     
-    // Clase File para el directorio y el método listFiles() para hacer una lista de files y recorrerlo para ir borrándolos.
-    // dado un File (directorio) borra los directorios y ficheros del File
+    /* Dado un File borra los directorios y ficheros del File de forma recursiva
+    y los muestra por pantalla. */
     public static void borrarDirectorioRecursivo(File dir) {
         if (dir.isDirectory()) {
             File[] ficheros = dir.listFiles();
@@ -123,11 +123,12 @@ public class AlbertoColmenarOperacionesFichero {
                 if (ficheros[x].isDirectory()) {
                     borrarDirectorioRecursivo(ficheros[x]);
                 }
+                if (ficheros[x].isFile())
+                    System.out.format("fichero %s borrado%n", ficheros[x]);
                 ficheros[x].delete();
-                // falta mostrar los ficheros borrados
             }
+            System.out.format("directorio %s borrado%n", dir.getName());
             dir.delete();
         }
-        System.out.format("El directorio %s ha sido borrado%n", dir.getName());
     }
 }
