@@ -45,11 +45,13 @@ public class AlbertoColmenarGestionPersonas {
                 crearFicheroPersonas(fichero);
             }
         }
+        /*
         ArrayList<Persona> lista = new ArrayList<>();
         volcadoALista(fichero, lista);
         listadoCompleto(lista);
         crearXML(fichero);
         crearHTML();
+        */
         int menu;
         do {
             System.out.format("1. Consultas.%n"
@@ -74,7 +76,7 @@ public class AlbertoColmenarGestionPersonas {
                             System.out.println(mostrarDatosDni(fichero, dni));
                             break;
                         case 2:
-                            System.out.println(mostrarPersonaVieja(fichero));
+                            mostrarPersonaMayor(fichero);
                             break;
                         case 3:
                             break;
@@ -103,10 +105,12 @@ public class AlbertoColmenarGestionPersonas {
     }
 
     
-    // 
+    // Crea el fichero datosPersona.obj con los datos del método
     private static void crearFicheroPersonas(File fichero) {
-        String dnis[] = {"83487622", "13481112", "22356622", "33455614", "77733182", "83765629", "22487611", "56787682", "80087600", "53077609"};
-        String nombres[] = {"Ana", "Javier", "Luisa", "Tomás", "Julio", "Pedro", "Rocio", "German", "Maria", "Serafín"};
+        String dnis[] = {"83487622", "13481112", "22356622", "33455614", "77733182", 
+            "83765629", "22487611", "56787682", "80087600", "53077609"};
+        String nombres[] = {"Ana", "Javier", "Luisa", "Tomás", "Julio", "Pedro", 
+            "Rocio", "German", "Maria", "Serafín"};
         int edades[] = {17, 22, 19, 15, 20, 26, 25, 19, 17, 20};
         ObjectOutputStream oos = null;
         try {
@@ -148,20 +152,20 @@ public class AlbertoColmenarGestionPersonas {
         return "-1";
     }
 
-    // sin terminar
-    private static String mostrarPersonaVieja(File fichero) {
+    // Dado el fichero de personas, muestra la persona con más edad
+    private static void mostrarPersonaMayor(File fichero) {
         ArrayList<Persona> lista = new ArrayList<>();
         volcadoALista(fichero, lista);
-        Persona personaVieja = lista.get(0);
+        Persona personaMayor = lista.get(0);
         for (Persona persona : lista) {
-            if (persona.getEdad() > personaVieja.getEdad()) {
-                personaVieja = persona;
+            if (persona.getEdad() > personaMayor.getEdad()) {
+                personaMayor = persona;
             }
         }
-        return personaVieja.toString();
+        System.out.println(personaMayor.toString());
     }
    
-    
+    // Lee el fichero de personas y escribe cada persona en el ArrayList
     public static void volcadoALista(File f, ArrayList<Persona> lista) {
         try {
             ObjectInputStream ois;
@@ -181,6 +185,7 @@ public class AlbertoColmenarGestionPersonas {
         }
     }
     
+    // Dado un ArrayList de Persona, lo recorre y lo escribe en el fichero 
     public static void volcadoAFichero(File f, ArrayList<Persona> lista) {
         ObjectOutputStream oos = null;
         try {
@@ -190,9 +195,9 @@ public class AlbertoColmenarGestionPersonas {
             }
             oos.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(AlbertoColmenarGestionPersonas.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         }
     }
     
