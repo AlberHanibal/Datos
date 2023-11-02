@@ -65,13 +65,13 @@ public class AlbertoColmenarAlumnoFicherosDeTexto {
         }
     }
     
-    // Clase File para crear el fichero provincias.txt
-    // Clase PrintWriter para escribir en el fichero. Método print() para ir escribiendo las provincias cuando se va recorriendo la lista.
-    // crea el fichero provincias.txt con la lista de provincias del propio método.
+    // Crea el fichero provincias.txt con la lista de provincias del propio método.
     public static void escribirProvincias() {
         PrintWriter texto = null;
         try {
-            String prov[]={"Albacete", "Avila", "Alicante", "Badajoz", "Barcelona", "Bilbao","Caceres", "Cádiz", "Corboba", "Huelva", "Sevilla", "Soria", "Toledo", "Valencia", "Zamora", "Zaragoza"};
+            String prov[]={"Albacete", "Avila", "Alicante", "Badajoz", "Barcelona", 
+                "Bilbao","Caceres", "Cádiz", "Corboba", "Huelva", "Sevilla", "Soria", 
+                "Toledo", "Valencia", "Zamora", "Zaragoza"};
             File ficheroProvincias = new File("provincias.txt");
             texto = new PrintWriter(ficheroProvincias);
             for(String provincia: prov) {
