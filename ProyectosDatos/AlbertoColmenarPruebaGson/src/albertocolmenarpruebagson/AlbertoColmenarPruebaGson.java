@@ -41,12 +41,13 @@ public class AlbertoColmenarPruebaGson {
             File ficheroJson = new File("listaAlumnos.json");
             mostrarFicheroJson(ficheroJson);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(AlbertoColmenarPruebaGson.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(AlbertoColmenarPruebaGson.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         }
     }
     
+    // Usando Gson y la lista de Alumnos del método retorna el JSON de dicha lista
     public static String mostrarAlumnosJson() {
         Gson gson = new Gson();
         ArrayList<Alumno> listaAlumnos = new ArrayList();
@@ -57,6 +58,7 @@ public class AlbertoColmenarPruebaGson {
         return gson.toJson(listaAlumnos);
     }
     
+    // Dado un JSON de Alumno lo muestra por la entrada estándar
     public static void mostrarFicheroJson(File ficheroJson) {
         try {
             Gson gson = new Gson();
@@ -66,7 +68,7 @@ public class AlbertoColmenarPruebaGson {
                 System.out.println(alumno);
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(AlbertoColmenarPruebaGson.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         }
     }
 }
