@@ -48,13 +48,13 @@ public class AlbertoColmenarGestionPersonas {
         
         ArrayList<Persona> lista = new ArrayList<>();
         volcadoALista(fichero, lista);
+        /*
         listadoCompleto(lista);
         File fichero2 = new File("datosLista.obj");
         volcadoAFichero(fichero2, lista);
-        /*
+        */
         crearXML(fichero);
         crearHTML();
-        */
         /*
         int menu;
         do {
@@ -205,6 +205,8 @@ public class AlbertoColmenarGestionPersonas {
         }
     }
     
+    /* Dado el fichero de datosPersonas.obj, se vuelta la información en un 
+    ArrayList y luego se convierte en XML con XStream */
     public static void crearXML(File fichero) {
         XStream xstream = new XStream();
         ArrayList<Persona> lista = new ArrayList<>();
