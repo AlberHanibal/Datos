@@ -56,11 +56,8 @@ public class AlbertoColmenarOperacionesConNio {
         }
         
     }
-    
-    // Clase Paths: para crear las rutas y método get() dado la ruta como string.
-    // Clase Files: método exists() para comprobar que existe el fichero y copy() para copiarlo en la otra ruta. 
-    // dado 2 variables Path, una con el Path del fichero que quieres copiar 
-    //y otra con el Path donde lo quieres copiar.
+    /* Dado 2 variables Path, una con el Path del fichero que quieres copiar 
+    y otra con el Path donde lo quieres copiar.*/
     public static void copiarFichero(Path ficheroACopiar, Path ficheroCopia) {
         try {
             if (Files.exists(ficheroACopiar)) {
