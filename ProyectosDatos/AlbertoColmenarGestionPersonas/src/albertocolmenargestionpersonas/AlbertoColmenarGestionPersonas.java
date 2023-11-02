@@ -102,6 +102,8 @@ public class AlbertoColmenarGestionPersonas {
 
     }
 
+    
+    // 
     private static void crearFicheroPersonas(File fichero) {
         String dnis[] = {"83487622", "13481112", "22356622", "33455614", "77733182", "83765629", "22487611", "56787682", "80087600", "53077609"};
         String nombres[] = {"Ana", "Javier", "Luisa", "Tomás", "Julio", "Pedro", "Rocio", "German", "Maria", "Serafín"};
