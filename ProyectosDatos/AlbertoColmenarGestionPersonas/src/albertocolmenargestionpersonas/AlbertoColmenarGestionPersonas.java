@@ -45,13 +45,17 @@ public class AlbertoColmenarGestionPersonas {
                 crearFicheroPersonas(fichero);
             }
         }
-        /*
+        
         ArrayList<Persona> lista = new ArrayList<>();
         volcadoALista(fichero, lista);
         listadoCompleto(lista);
+        File fichero2 = new File("datosLista.obj");
+        volcadoAFichero(fichero2, lista);
+        /*
         crearXML(fichero);
         crearHTML();
         */
+        /*
         int menu;
         do {
             System.out.format("1. Consultas.%n"
@@ -101,7 +105,7 @@ public class AlbertoColmenarGestionPersonas {
                     break;
             }
         } while (menu != 3);
-
+        */
     }
 
     
