@@ -1,20 +1,20 @@
-package conectarconmysql;
+package colmenaralbertomvcgestionusuarios;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author DAM2A-03
  */
-public class ConectarConMysql {
+public class ColmenarAlbertoMVCGestionUsuarios {
 
-    
     public static Connection conexion;
-    
+
+    public ColmenarAlbertoMVCGestionUsuarios() {
+    }
+   
     public void getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -25,10 +25,6 @@ public class ConectarConMysql {
         } catch (SQLException ex) {
             System.err.println("Error de conexión " + ex.getMessage());
         }
-    }
-    public static void main(String[] args) {
-       ConectarConMysql prueba = new ConectarConMysql();
-       prueba.getConnection();
     }
     
 }

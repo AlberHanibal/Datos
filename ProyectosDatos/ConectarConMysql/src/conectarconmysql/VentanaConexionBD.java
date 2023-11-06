@@ -80,7 +80,7 @@ public class VentanaConexionBD extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/prueba3", "root", "");
+            Connection conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/gestionusuarios2", "root", "");
             System.out.println("Conexion realizada");
             String text = "Conexion realizada";
             jTextArea1.append(text);
