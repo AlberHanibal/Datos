@@ -1,9 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package colmenaralbertomvcgestionusuarios;
+
+import com.sun.corba.se.impl.orbutil.CorbaResourceUtil;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,7 +31,7 @@ public class VentanaVerificar extends javax.swing.JFrame {
     private boolean camposRellenados() {
         return (cajaContrasena.getPassword().length != 0) && (!cajaUsuario.getText().equals(""));
     }
-    
+        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -156,15 +159,32 @@ public class VentanaVerificar extends javax.swing.JFrame {
     }//GEN-LAST:event_cajaUsuarioActionPerformed
 
     private void botonNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevoUsuarioActionPerformed
-        // valueOf para pillar el password
         if (camposRellenados()) {
-            // comprobar que no existe el usuario
+            String nombre = cajaUsuario.getText();
+            String contrasena = String.valueOf(cajaContrasena.getPassword());
+            if (!mvcGestionUsuarios.buscarUsuario(nombre, contrasena)) {
+                if (mvcGestionUsuarios.annadirUsuario(nombre, contrasena)) {
+                    JOptionPane.showMessageDialog(this, "Usuario intertado correctamente");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Ya existe el usuario");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Rellena los campos");
         }
     }//GEN-LAST:event_botonNuevoUsuarioActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         if (camposRellenados()) {
-            // comprobar en bd las cositas
+            String nombre = cajaUsuario.getText();
+            String contrasena = String.valueOf(cajaContrasena.getPassword());
+            if (mvcGestionUsuarios.buscarUsuario(nombre, contrasena)) {
+                JOptionPane.showMessageDialog(this, "Conexión correcta, bienvenido");
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña errónea");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Rellena los campos");
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
@@ -178,13 +198,34 @@ public class VentanaVerificar extends javax.swing.JFrame {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonCambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCambiarContrasenaActionPerformed
-        // comprobar que es el usuario y contraseña
-        // sacar el otro jform
+        if (camposRellenados()) {
+            String nombre = cajaUsuario.getText();
+            String contrasena = String.valueOf(cajaContrasena.getPassword());
+            if (mvcGestionUsuarios.buscarUsuario(nombre, contrasena)) {
+                // sacar el otro jform
+                CambiarContraseña ventanaCambiarContrasena = new CambiarContraseña();
+                ventanaCambiarContrasena.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña errónea");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Rellena los campos");
+        }
     }//GEN-LAST:event_botonCambiarContrasenaActionPerformed
 
     private void cajaContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cajaContrasenaActionPerformed
         if (camposRellenados()) {
-            habilitarBotones();
+            String contrasena = String.valueOf(cajaContrasena.getPassword());
+            if (mvcGestionUsuarios.contrasenaValida(contrasena)) {
+                habilitarBotones();
+            } else {
+                JOptionPane.showMessageDialog(this, "La contraseña no es válida.\n" +
+                                                " Debe estar formada sólo por letras, números y el carácter “_”.\n" +
+                                                " Debe tener 8 caracteres como mínimo.\n" +
+                                                " No debe comenzar con un carácter numérico.\n" +
+                                                " Debe contener al menos una letra en mayúscula.");
+            }
+            
         }
     }//GEN-LAST:event_cajaContrasenaActionPerformed
 
