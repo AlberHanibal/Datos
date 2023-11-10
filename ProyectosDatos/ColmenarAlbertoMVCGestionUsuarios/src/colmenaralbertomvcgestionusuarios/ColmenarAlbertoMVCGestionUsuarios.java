@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -65,11 +63,36 @@ public class ColmenarAlbertoMVCGestionUsuarios {
         return insertado;
     }
     
-    public boolean contrasenaValida(String contrasena) {
-        boolean valida = false;
-        
-        
-        return valida;
+    public boolean modificarContrasena(String nombre, String contrasena) {
+        boolean modificado = false;
+        try {
+            PreparedStatement sql = conexion.prepareStatement("UPDATE usuarios SET contraseña = ? WHERE nombre = ?");
+            sql.setString(1, contrasena);
+            sql.setString(2, nombre);
+            sql.executeUpdate();
+            modificado = true;
+            sql.close();
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return modificado;
+    }
+    
+    public String contrasenaValida(String contrasena) {
+        String errores = "";
+        if (!contrasena.matches("\\w*")) {
+            errores += " Debe estar formada sólo por letras, números y el carácter “_”.\n";
+        }
+        if (contrasena.length() < 8) {
+            errores += " Debe tener 8 caracteres como mínimo.\n";
+        }
+        if (contrasena.matches("^\\d.*")) {
+            errores += " No debe comenzar con un carácter numérico.\n";
+        }
+        if (!contrasena.matches(".*[A-Z]+.*")) {
+            errores += " Debe contener al menos una letra en mayúscula.\n";
+        }
+        return errores;
     }
     
 }

@@ -1,11 +1,5 @@
 package colmenaralbertomvcgestionusuarios;
 
-import com.sun.corba.se.impl.orbutil.CorbaResourceUtil;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -203,7 +197,7 @@ public class VentanaVerificar extends javax.swing.JFrame {
             String contrasena = String.valueOf(cajaContrasena.getPassword());
             if (mvcGestionUsuarios.buscarUsuario(nombre, contrasena)) {
                 // sacar el otro jform
-                CambiarContraseña ventanaCambiarContrasena = new CambiarContraseña();
+                CambiarContraseña ventanaCambiarContrasena = new CambiarContraseña(nombre);
                 ventanaCambiarContrasena.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario o contraseña errónea");
@@ -216,14 +210,11 @@ public class VentanaVerificar extends javax.swing.JFrame {
     private void cajaContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cajaContrasenaActionPerformed
         if (camposRellenados()) {
             String contrasena = String.valueOf(cajaContrasena.getPassword());
-            if (mvcGestionUsuarios.contrasenaValida(contrasena)) {
+            String contrasenaValida = mvcGestionUsuarios.contrasenaValida(contrasena);
+            if (contrasenaValida.equals("")) {
                 habilitarBotones();
             } else {
-                JOptionPane.showMessageDialog(this, "La contraseña no es válida.\n" +
-                                                " Debe estar formada sólo por letras, números y el carácter “_”.\n" +
-                                                " Debe tener 8 caracteres como mínimo.\n" +
-                                                " No debe comenzar con un carácter numérico.\n" +
-                                                " Debe contener al menos una letra en mayúscula.");
+                JOptionPane.showMessageDialog(this, contrasenaValida);
             }
             
         }

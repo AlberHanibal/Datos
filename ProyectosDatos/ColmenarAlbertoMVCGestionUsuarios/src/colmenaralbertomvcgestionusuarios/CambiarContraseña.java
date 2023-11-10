@@ -1,5 +1,7 @@
 package colmenaralbertomvcgestionusuarios;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author DAM2A-03
@@ -7,11 +9,21 @@ package colmenaralbertomvcgestionusuarios;
 public class CambiarContraseña extends javax.swing.JFrame {
 
     private ColmenarAlbertoMVCGestionUsuarios mvcGestionUsuarios = new ColmenarAlbertoMVCGestionUsuarios();
+    private String nombre;
     
     public CambiarContraseña() {
         initComponents();
+        mvcGestionUsuarios.getConnection();
     }
-
+    
+    public CambiarContraseña(String nombre) {
+        initComponents();
+        this.nombre = nombre;
+        mvcGestionUsuarios.getConnection();
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,6 +38,7 @@ public class CambiarContraseña extends javax.swing.JFrame {
         cajaContrasena2 = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         botonGuardar = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,22 +53,30 @@ public class CambiarContraseña extends javax.swing.JFrame {
             }
         });
 
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(69, 69, 69)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonCancelar))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonGuardar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cajaContrasena2, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                            .addComponent(cajaContrasena1)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cajaContrasena2, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                        .addComponent(cajaContrasena1))
+                    .addComponent(botonGuardar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -68,21 +89,47 @@ public class CambiarContraseña extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cajaContrasena2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(39, 39, 39)
-                .addComponent(botonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(botonGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(botonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-        System.out.println("hola en cambiar contraseña");
-        
-        
-        
-        // cuando se guarde tuVentana.dispose()
+        String contrasena1 = String.valueOf(cajaContrasena1.getPassword());
+        String contrasenaValida = mvcGestionUsuarios.contrasenaValida(contrasena1);
+        boolean contrasenaComprobada = true;
+        if (!contrasenaValida.equals("")) {   
+            JOptionPane.showMessageDialog(this, contrasenaValida);
+            cajaContrasena1.setText("");
+            cajaContrasena2.setText("");
+            contrasenaComprobada = false;
+            return;
+        }
+        String contrasena2 = String.valueOf(cajaContrasena2.getPassword());
+        if (!contrasena1.equals(contrasena2)) {
+            JOptionPane.showMessageDialog(this, "Las dos contraseñas no son iguales");
+            cajaContrasena2.setText("");
+            contrasenaComprobada = false;
+        }
+        if (contrasenaComprobada) {
+            boolean guardado = mvcGestionUsuarios.modificarContrasena(nombre, contrasena1);
+            if (guardado) {
+                JOptionPane.showMessageDialog(this, "Se ha guardado correctamente");
+                this.dispose();   
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al guardar la contraseña");
+            }
+        }
     }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,6 +167,7 @@ public class CambiarContraseña extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonGuardar;
     private javax.swing.JPasswordField cajaContrasena1;
     private javax.swing.JPasswordField cajaContrasena2;
