@@ -46,3 +46,42 @@ Clase RandomAccessFile(ruta o File, r o rw)
 - length() tamaño del fichero en bytes
 - skipBytes(desplaz) para saltar
 - writeInt(), writeDouble(), writeChar() , read igual
+
+
+# XML
+## DOM
+DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+DocumentBuilder builder = builderFactory.newDocumentBuilder();
+Document document = builder.parse(File));
+- document.getDocumentElement() raiz del árbol
+- getNodeName(), getTagName(), getTextContent(), setTextContent()
+- getElementsByTagName(tag)
+- getLength(), item(i), getChildNodes(), removeChild()
+- createElement(), createTextNode(), appendChild()
+------------
+para grabar los cambios
+Source source= new DOMSource(document);
+Result result = new StreamResult(File));
+Transformer transformer=TransformerFactory.newInstance().newTransformer();
+transformer.transform(source,result);
+
+## XStream
+xtream-numeros.jar, kxml-numeros.jar
+serializar primero
+- XStream(), alias(), toXML(lista, FileOutputStream())
+
+## HTML
+os = FileOutputStream(File .html)
+Source estilos = new StreamSource(.xsl)
+Source datos = new StreamSource(.xml)
+Result result = new StreamResult(os)
+Transformer transformer=TransformerFactory.newInstance().newTransformer(estilos);
+transformer.transform(source,result);
+
+
+# JSON
+JSONParser parser = new JSONParser();
+Object obj = parser.parse(new FileReader("newjson.json"));
+JSONObject jsonObject =(JSONObject) obj;
+- JSONArray para leer Iterator <String> iterator = tags(es JSONArray).iterator()
+ver los ejercicios
