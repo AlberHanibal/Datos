@@ -34,3 +34,12 @@ INSERT INTO pasajeros
 VALUES (555, 'BG-WW-PPX', 'TU', 'NO')
 INSERT INTO pasajeros
 VALUES (666, 'BG-WW-PPX', 'PR', 'NO')
+
+-- Modifica la hora de salida del vuelo anterior.
+UPDATE vuelos
+SET hora_salida = '17/11/23-19:26'
+WHERE cod_vuelo LIKE 'BG-WW-PPX'
+
+-- Borra a uno de los dos pasajeros asignados a este vuelo.
+DELETE FROM pasajeros
+WHERE NUM = 555
