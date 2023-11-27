@@ -61,6 +61,11 @@ public class ColmenarAlbertoVentanaDescripcion extends javax.swing.JFrame {
         botonEstructura.setText("Estructura");
         botonEstructura.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonEstructura.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonEstructura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEstructuraActionPerformed(evt);
+            }
+        });
 
         areaDatos.setColumns(20);
         areaDatos.setRows(5);
@@ -123,6 +128,15 @@ public class ColmenarAlbertoVentanaDescripcion extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_botonTablaActionPerformed
+
+    private void botonEstructuraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEstructuraActionPerformed
+        String[] opciones = {"pasajeros", "vuelos"};
+        int seleccionado = JOptionPane.showOptionDialog(this, "¿Qué tabla quieres ver?", "Información tabla", JOptionPane.DEFAULT_OPTION, INFORMATION_MESSAGE, null, opciones, opciones[0]);
+        if (seleccionado > -1) {
+            String datos = MVCVuelos.informaColumnas(opciones[seleccionado]);
+            areaDatos.setText(datos);
+        }
+    }//GEN-LAST:event_botonEstructuraActionPerformed
 
     /**
      * @param args the command line arguments
