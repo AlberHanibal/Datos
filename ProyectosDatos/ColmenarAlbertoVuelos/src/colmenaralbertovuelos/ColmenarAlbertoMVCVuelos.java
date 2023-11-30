@@ -24,6 +24,19 @@ public class ColmenarAlbertoMVCVuelos {
     }
     
     public void getConnection() {
+        
+        
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conexion = (Connection) DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "Dam-2022");
+            System.out.println("Conexion realizada");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("Error " + ex.getMessage());
+        } catch (SQLException ex) {
+            System.err.println("Error de conexión " + ex.getMessage());
+        }
+        
+        /*
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/gestionvuelos", "root", "");
@@ -33,6 +46,7 @@ public class ColmenarAlbertoMVCVuelos {
         } catch (SQLException ex) {
             System.err.println("Error de conexión " + ex.getMessage());
         }
+        */
     }
     
     public String informaBD() {
@@ -44,7 +58,7 @@ public class ColmenarAlbertoMVCVuelos {
                     + "URL: %s%n"
                     + "USUARIO: %s%n", 
                     dbmd.getDatabaseProductName(), dbmd.getDriverName(), dbmd.getURL(), dbmd.getUserName());
-            ResultSet tablas = dbmd.getTables("gestionvuelos", "gestionvuelos", null, null);
+            ResultSet tablas = dbmd.getTables("SYSTEM", "SYSTEM", null, null);
             while (tablas.next()) {
                 datos += "TABLA: " + tablas.getString("TABLE_NAME") + "\n";
             }
@@ -58,8 +72,10 @@ public class ColmenarAlbertoMVCVuelos {
         String datos = "";
         try {
             DatabaseMetaData dbmd = conexion.getMetaData();
-            ResultSet tabla = dbmd.getTables("gestionvuelos", "gestionvuelos", nombreTabla, null);
+            ResultSet tabla = dbmd.getTables("SYSTEM", "SYSTEM", nombreTabla, null);
+            // no entra
             while (tabla.next()) {
+                
                 datos += String.format("CATALOGO: %s%n" +
                                 "ESQUEMA: %s%n" +
                                 "NOMBRE TABLA: %s%n" +
@@ -79,7 +95,7 @@ public class ColmenarAlbertoMVCVuelos {
         String datos = "";
         try {
             DatabaseMetaData dbmd = conexion.getMetaData();
-            ResultSet columnas = dbmd.getColumns(null, "gestionvuelos", nombreTabla, null);
+            ResultSet columnas = dbmd.getColumns(null, "SYSTEM", nombreTabla, null);
             
             while (columnas.next()) {
                 datos += String.format("NOMBRE: %s%n" +
