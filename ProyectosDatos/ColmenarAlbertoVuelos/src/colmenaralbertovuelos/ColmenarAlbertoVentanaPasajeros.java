@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package colmenaralbertovuelos;
 
-import java.awt.List;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 public class ColmenarAlbertoVentanaPasajeros extends javax.swing.JFrame {
 
     private ColmenarAlbertoMVCVuelos MVCVuelos = new ColmenarAlbertoMVCVuelos();
-    
+
     public ColmenarAlbertoVentanaPasajeros() {
         initComponents();
         MVCVuelos.getConnection();
@@ -159,12 +153,12 @@ public class ColmenarAlbertoVentanaPasajeros extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public void cargarListaCodigos() {
         ArrayList<String> lista = new ArrayList();
         lista = MVCVuelos.obtenerListaCodigo();
         for (String cod : lista) {
-            this.comboCodigos.addItem(cod);                       
+            this.comboCodigos.addItem(cod);
         }
     }
 

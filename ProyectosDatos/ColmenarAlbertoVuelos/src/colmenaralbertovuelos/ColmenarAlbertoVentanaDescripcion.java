@@ -10,7 +10,7 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 public class ColmenarAlbertoVentanaDescripcion extends javax.swing.JFrame {
 
     private ColmenarAlbertoMVCVuelos MVCVuelos = new ColmenarAlbertoMVCVuelos();
-    
+
     public ColmenarAlbertoVentanaDescripcion() {
         initComponents();
         MVCVuelos.getConnection();
@@ -126,7 +126,7 @@ public class ColmenarAlbertoVentanaDescripcion extends javax.swing.JFrame {
             String datos = MVCVuelos.informaTabla(opciones[seleccionado]);
             areaDatos.setText(datos);
         }
-        
+
     }//GEN-LAST:event_botonTablaActionPerformed
 
     private void botonEstructuraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEstructuraActionPerformed
