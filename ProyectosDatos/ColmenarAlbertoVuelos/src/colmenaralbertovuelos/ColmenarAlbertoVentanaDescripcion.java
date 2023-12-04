@@ -120,8 +120,10 @@ public class ColmenarAlbertoVentanaDescripcion extends javax.swing.JFrame {
     }//GEN-LAST:event_botonBDActionPerformed
 
     private void botonTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonTablaActionPerformed
+        // muestra un Dialog con los nombres de las tablas para que el usuario escoja
         String[] opciones = {"PASAJEROS", "VUELOS"};
-        int seleccionado = JOptionPane.showOptionDialog(this, "¿Qué tabla quieres ver?", "Información tabla", JOptionPane.DEFAULT_OPTION, INFORMATION_MESSAGE, null, opciones, opciones[0]);
+        int seleccionado = JOptionPane.showOptionDialog(this, "¿Qué tabla quieres ver?", "Información tabla", 
+                JOptionPane.DEFAULT_OPTION, INFORMATION_MESSAGE, null, opciones, opciones[0]);
         if (seleccionado > -1) {
             String datos = MVCVuelos.informaTabla(opciones[seleccionado]);
             areaDatos.setText(datos);
@@ -130,8 +132,10 @@ public class ColmenarAlbertoVentanaDescripcion extends javax.swing.JFrame {
     }//GEN-LAST:event_botonTablaActionPerformed
 
     private void botonEstructuraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEstructuraActionPerformed
+        // muestra un Dialog con los nombres de las tablas para que el usuario escoja
         String[] opciones = {"PASAJEROS", "VUELOS"};
-        int seleccionado = JOptionPane.showOptionDialog(this, "¿Qué tabla quieres ver?", "Información tabla", JOptionPane.DEFAULT_OPTION, INFORMATION_MESSAGE, null, opciones, opciones[0]);
+        int seleccionado = JOptionPane.showOptionDialog(this, "¿Qué tabla quieres ver?", "Información tabla", 
+                JOptionPane.DEFAULT_OPTION, INFORMATION_MESSAGE, null, opciones, opciones[0]);
         if (seleccionado > -1) {
             String datos = MVCVuelos.informaColumnas(opciones[seleccionado]);
             areaDatos.setText(datos);

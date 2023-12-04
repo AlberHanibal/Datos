@@ -25,15 +25,15 @@ public class ColmenarAlbertoMVCVuelos {
     public void getConnection() {
         Scanner in = new Scanner(System.in);
         String bd = "";
-
+        // pregunta como quiere conectarse
         while ((!bd.equals("mySQL")) && !bd.equals("Oracle")) {
             System.out.println("¿Cómo quieres conectarte, con mySQL u Oracle?");
             bd = in.nextLine();
         }
 
         if (bd.equals("mySQL")) {
+            nombreBD = "gestionvuelos";
             try {
-                nombreBD = "gestionvuelos";
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/gestionvuelos", "root", "");
                 System.out.println("Conexion realizada");

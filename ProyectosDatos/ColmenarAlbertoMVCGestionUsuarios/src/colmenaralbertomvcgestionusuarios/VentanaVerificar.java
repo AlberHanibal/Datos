@@ -196,7 +196,6 @@ public class VentanaVerificar extends javax.swing.JFrame {
             String nombre = cajaUsuario.getText();
             String contrasena = String.valueOf(cajaContrasena.getPassword());
             if (mvcGestionUsuarios.buscarUsuario(nombre, contrasena)) {
-                // sacar el otro jform
                 CambiarContraseña ventanaCambiarContrasena = new CambiarContraseña(nombre);
                 ventanaCambiarContrasena.setVisible(true);
             } else {
