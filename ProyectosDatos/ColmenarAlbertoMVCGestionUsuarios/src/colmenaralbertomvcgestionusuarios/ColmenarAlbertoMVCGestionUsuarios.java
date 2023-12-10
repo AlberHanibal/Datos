@@ -35,7 +35,8 @@ public class ColmenarAlbertoMVCGestionUsuarios {
         if ((!nombre.isEmpty()) || contrasena.isEmpty()) {
             try {
                 Statement stmt = (Statement) conexion.createStatement();
-                ResultSet resultado = stmt.executeQuery("SELECT * FROM usuarios WHERE nombre='" + nombre + "' and contraseña='" + contrasena + "'");
+                ResultSet resultado = stmt.executeQuery("SELECT * FROM usuarios WHERE nombre='" + 
+                        nombre + "' and contraseña='" + contrasena + "'");
                 if (resultado.next()) {
                     encontrado = true;
                 }
