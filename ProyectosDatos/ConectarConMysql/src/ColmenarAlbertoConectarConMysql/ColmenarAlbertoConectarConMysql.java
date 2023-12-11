@@ -8,7 +8,7 @@ import java.sql.SQLException;
  *
  * @author DAM2A-03
  */
-public class ConectarConMysql {
+public class ColmenarAlbertoConectarConMysql {
 
     
     public static Connection conexion;
@@ -25,7 +25,7 @@ public class ConectarConMysql {
         }
     }
     public static void main(String[] args) {
-       ConectarConMysql prueba = new ConectarConMysql();
+       ColmenarAlbertoConectarConMysql prueba = new ColmenarAlbertoConectarConMysql();
        prueba.getConnection();
     }
     
