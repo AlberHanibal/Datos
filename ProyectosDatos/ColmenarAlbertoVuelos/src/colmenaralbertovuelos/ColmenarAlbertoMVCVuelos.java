@@ -80,7 +80,6 @@ public class ColmenarAlbertoMVCVuelos {
         try {
             DatabaseMetaData dbmd = conexion.getMetaData();
             ResultSet tabla = dbmd.getTables(nombreBD, nombreBD, nombreTabla, null);
-            // no entra
             while (tabla.next()) {
 
                 datos += String.format("CATALOGO: %s%n"
