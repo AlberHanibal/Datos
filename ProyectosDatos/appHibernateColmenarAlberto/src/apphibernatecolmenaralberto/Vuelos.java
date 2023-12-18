@@ -92,10 +92,6 @@ public class Vuelos  implements java.io.Serializable {
     public void setPlazasPrimera(Integer plazasPrimera) {
         this.plazasPrimera = plazasPrimera;
     }
-
-
-
-
 }
 
 
