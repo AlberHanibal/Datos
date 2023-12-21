@@ -5,9 +5,7 @@
         <group>
             <file>file:/C:/Users/DAM2A-03/Documents/Datos/ProyectosDatos/appHibernateColmenarAlberto/src/apphibernatecolmenaralberto/Vuelos.java</file>
             <file>file:/C:/Users/DAM2A-03/Documents/Datos/ProyectosDatos/appHibernateColmenarAlberto/src/apphibernatecolmenaralberto/AppHibernateColmenarAlberto.java</file>
-            <file>file:/C:/Users/DAM2A-03/Documents/Datos/ProyectosDatos/appHibernateColmenarAlberto/src/hibernate.cfg.xml</file>
-            <file>file:/C:/Users/DAM2A-03/Documents/Datos/ProyectosDatos/appHibernateColmenarAlberto/src/apphibernatecolmenaralberto/Vuelos.hbm.xml</file>
-            <file>file:/C:/Users/DAM2A-03/Documents/Datos/ProyectosDatos/appHibernateColmenarAlberto/src/hibernate.reveng.xml</file>
+            <file>file:/C:/Users/DAM2A-03/Documents/Datos/ProyectosDatos/appHibernateColmenarAlberto/src/apphibernatecolmenaralberto/InterfazHibernateColmenarAlberto.java</file>
         </group>
     </open-files>
 </project-private>
