@@ -2,6 +2,7 @@ package apphibernatecolmenaralberto;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -70,5 +71,44 @@ public class AppHibernateColmenarAlberto {
         session.save(vuelo);
         transaction.commit();
         session.close();
+    }
+    
+    public void borrarVuelo(String codVuelo) {
+        Session session = sesion.openSession();
+        Transaction transaction = session.beginTransaction();
+        Vuelos vuelo = (Vuelos) session.load(Vuelos.class, codVuelo);
+        session.delete(vuelo);
+        transaction.commit();
+        session.close();
+    }
+    
+    public DefaultTableModel consultarVuelos(String destino, String procedencia) {
+        DefaultTableModel tabla = new DefaultTableModel();
+        Session session = sesion.openSession();
+        Query q = session.createQuery("from Vuelos");
+        List <Vuelos> listaVuelo = q.list();
+        
+        tabla.addColumn("Código");
+        tabla.addColumn("HoraSalida");
+        tabla.addColumn("Destino");
+        tabla.addColumn("Procedencia");
+        tabla.addColumn("PlazasFumador");
+        tabla.addColumn("PlazasNoFumador");
+        tabla.addColumn("PlazasTurista");
+        tabla.addColumn("PlazasPrimera");
+        Object fila[] = new Object[8];
+        
+        for (Vuelos vuelo : listaVuelo) {
+            fila[0] = vuelo.getCodVuelo();
+            fila[1] = vuelo.getHoraSalida();
+            fila[2] = vuelo.getDestino();
+            fila[3] = vuelo.getProcedencia();
+            fila[4] = vuelo.getPlazasFumador();
+            fila[5] = vuelo.getPlazasNoFumador();
+            fila[6] = vuelo.getPlazasTurista();
+            fila[7] = vuelo.getPlazasPrimera();
+            tabla.addRow(fila);
+        }
+        return tabla;
     }
 }

@@ -7,6 +7,7 @@ package apphibernatecolmenaralberto;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -39,50 +40,41 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
         comboVuelos.setEnabled(false);
         cajaCodigo.setEnabled(false);
         cajaCodigo.setEditable(true);
+        cajaCodigo.setText("");
         cajaHoraSalida.setEnabled(false);
+        cajaHoraSalida.setText("");
         cajaDestino.setEnabled(false);
+        cajaDestino.setText("");
         cajaProcedencia.setEnabled(false);
+        cajaProcedencia.setText("");
         cajaFumador.setEnabled(false);
+        cajaFumador.setText("");
         cajaNoFumador.setEnabled(false);
+        cajaNoFumador.setText("");
         cajaTurista.setEnabled(false);
+        cajaTurista.setText("");
         cajaPrimera.setEnabled(false);
+        cajaPrimera.setText("");
         botonSiguiente.setEnabled(false);
         botonSiguiente.setText("Siguiente");
         textoError.setText("");
     }
     
     public void rellenarComboVuelos() {
-        List<Vuelos> lista = new ArrayList();
-        lista = AppHibernate.obtenerListaVuelos();
-        for (Vuelos vuelo : lista) {
-            comboVuelos.addItem(vuelo.getCodVuelo());
-        }
-    }
-
-    public void insertarVuelo() {
-        textoError.setText("");
-        if (!camposRellenos()) {
-            textoError.setText("Introduce todos los campos");
-        } else {
-            AppHibernate.insertarVuelo(cajaCodigo.getText(), cajaHoraSalida.getText(), 
-                    cajaDestino.getText(), cajaProcedencia.getText(), Integer.parseInt(cajaFumador.getText()), 
-                    Integer.parseInt(cajaNoFumador.getText()), Integer.parseInt(cajaTurista.getText()), 
-                    Integer.parseInt(cajaPrimera.getText()));
+        if (comboVuelos.getItemCount() == 0) {
+            List<Vuelos> lista = new ArrayList();
+            lista = AppHibernate.obtenerListaVuelos();
+            for (Vuelos vuelo : lista) {
+                comboVuelos.addItem(vuelo.getCodVuelo());
+            }
         }
     }
     
     public boolean camposRellenos() {
-        return cajaCodigo.getText().equals("") || cajaHoraSalida.getText().equals("") || 
-                cajaDestino.getText().equals("") || cajaProcedencia.getText().equals("") || 
-                cajaFumador.getText().equals("") || cajaNoFumador.getText().equals("") || 
-                cajaTurista.getText().equals("") || cajaPrimera.getText().equals("");
-    }
-    
-    public void modificarVuelo() {
-        AppHibernate.modificarVuelo(cajaCodigo.getText(), cajaHoraSalida.getText(), 
-                    cajaDestino.getText(), cajaProcedencia.getText(), Integer.parseInt(cajaFumador.getText()), 
-                    Integer.parseInt(cajaNoFumador.getText()), Integer.parseInt(cajaTurista.getText()), 
-                    Integer.parseInt(cajaPrimera.getText()));
+        return !cajaCodigo.getText().equals("") && !cajaHoraSalida.getText().equals("") && 
+                !cajaDestino.getText().equals("") && !cajaProcedencia.getText().equals("") && 
+                !cajaFumador.getText().equals("") && !cajaNoFumador.getText().equals("") && 
+                !cajaTurista.getText().equals("") && !cajaPrimera.getText().equals("");
     }
 
     @SuppressWarnings("unchecked")
@@ -113,6 +105,8 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         botonSiguiente = new javax.swing.JButton();
         textoError = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaVuelos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -131,8 +125,18 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
         });
 
         botonBorrar.setText("Borrar Vuelo");
+        botonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBorrarActionPerformed(evt);
+            }
+        });
 
         botonConsultar.setText("Consultar Vuelos");
+        botonConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonConsultarActionPerformed(evt);
+            }
+        });
 
         comboVuelos.setEnabled(false);
         comboVuelos.addActionListener(new java.awt.event.ActionListener() {
@@ -192,6 +196,20 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
             }
         });
 
+        tablaVuelos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Código", "HoraSalida", "Destino", "Procedencia", "PlazasFumador", "PlazasNoFumador", "PlazasTuristas", "PlazasPrimera"
+            }
+        ));
+        tablaVuelos.setEnabled(false);
+        jScrollPane1.setViewportView(tablaVuelos);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -200,62 +218,67 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cajaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cajaFumador, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cajaHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cajaNoFumador, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cajaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cajaTurista, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cajaPrimera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cajaProcedencia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botonInsertar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botonModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botonBorrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botonConsultar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(comboVuelos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(botonSiguiente)
-                        .addGap(18, 18, 18)
-                        .addComponent(textoError)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cajaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cajaFumador, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cajaHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cajaNoFumador, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cajaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cajaTurista, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(32, 32, 32)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cajaPrimera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cajaProcedencia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botonInsertar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(botonModificar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(botonBorrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(botonConsultar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboVuelos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botonSiguiente)
+                                .addGap(18, 18, 18)
+                                .addComponent(textoError)))
+                        .addGap(0, 10, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,7 +317,9 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonSiguiente)
                     .addComponent(textoError))
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -325,13 +350,38 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
     private void botonSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSiguienteActionPerformed
         String operacion = botonSiguiente.getText();
         if (operacion.equals("Insertar")) {
-            insertarVuelo();
+            textoError.setText("");
+            if (!camposRellenos()) {
+                textoError.setText("Introduce todos los campos");
+            } else {
+                AppHibernate.insertarVuelo(cajaCodigo.getText(), cajaHoraSalida.getText(), 
+                        cajaDestino.getText(), cajaProcedencia.getText(), Integer.parseInt(cajaFumador.getText()), 
+                        Integer.parseInt(cajaNoFumador.getText()), Integer.parseInt(cajaTurista.getText()), 
+                        Integer.parseInt(cajaPrimera.getText()));
+                comboVuelos.addItem(cajaCodigo.getText());
+                reiniciarInterfaz();
+                textoError.setText("Insertado correctamente");
+            }
         } else if (operacion.equals("Modificar")) {
             if (!camposRellenos()) {
                 textoError.setText("Introduce todos los campos");
             } else {
-                modificarVuelo();
+                AppHibernate.modificarVuelo(cajaCodigo.getText(), cajaHoraSalida.getText(), 
+                    cajaDestino.getText(), cajaProcedencia.getText(), Integer.parseInt(cajaFumador.getText()), 
+                    Integer.parseInt(cajaNoFumador.getText()), Integer.parseInt(cajaTurista.getText()), 
+                    Integer.parseInt(cajaPrimera.getText()));
+                reiniciarInterfaz();
+                textoError.setText("Modificado correctamente");
             }
+        } else if (operacion.equals("Borrar")) {
+            String codigoVuelo = (String) comboVuelos.getSelectedItem();
+            AppHibernate.borrarVuelo(codigoVuelo);
+            comboVuelos.removeItem(codigoVuelo);
+            reiniciarInterfaz();
+            textoError.setText("Borrado correctamente");
+        } else if (operacion.equals("Consultar")) {
+            DefaultTableModel tabla = AppHibernate.consultarVuelos("", "");
+            tablaVuelos.setModel(tabla);
         }
     }//GEN-LAST:event_botonSiguienteActionPerformed
 
@@ -339,6 +389,7 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
         reiniciarInterfaz();
         jLabel1.setEnabled(true);
         comboVuelos.setEnabled(true);
+        botonSiguiente.setEnabled(true);
         botonSiguiente.setText("Modificar");
         rellenarComboVuelos();
     }//GEN-LAST:event_botonModificarActionPerformed
@@ -346,24 +397,26 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
     private void comboVuelosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboVuelosActionPerformed
         String codVuelo = String.valueOf(comboVuelos.getSelectedItem());
         Vuelos vuelo = AppHibernate.obtenerVuelo(codVuelo);
-        jLabel2.setEnabled(true);
-        jLabel3.setEnabled(true);
-        jLabel4.setEnabled(true);
-        jLabel5.setEnabled(true);
-        jLabel6.setEnabled(true);
-        jLabel7.setEnabled(true);
-        jLabel8.setEnabled(true);
-        jLabel9.setEnabled(true);
-        cajaCodigo.setEnabled(true);
-        cajaCodigo.setEditable(false);
-        cajaHoraSalida.setEnabled(true);
-        cajaDestino.setEnabled(true);
-        cajaProcedencia.setEnabled(true);
-        cajaFumador.setEnabled(true);
-        cajaNoFumador.setEnabled(true);
-        cajaTurista.setEnabled(true);
-        cajaPrimera.setEnabled(true);
-        botonSiguiente.setEnabled(true);
+        if (botonSiguiente.getText().equals("Modificar")) {
+            jLabel2.setEnabled(true);
+            jLabel3.setEnabled(true);
+            jLabel4.setEnabled(true);
+            jLabel5.setEnabled(true);
+            jLabel6.setEnabled(true);
+            jLabel7.setEnabled(true);
+            jLabel8.setEnabled(true);
+            jLabel9.setEnabled(true);
+            cajaCodigo.setEnabled(true);
+            cajaCodigo.setEditable(false);
+            cajaHoraSalida.setEnabled(true);
+            cajaDestino.setEnabled(true);
+            cajaProcedencia.setEnabled(true);
+            cajaFumador.setEnabled(true);
+            cajaNoFumador.setEnabled(true);
+            cajaTurista.setEnabled(true);
+            cajaPrimera.setEnabled(true);
+            botonSiguiente.setEnabled(true);
+        }
         cajaCodigo.setText(vuelo.getCodVuelo());
         cajaHoraSalida.setText(vuelo.getHoraSalida());
         cajaDestino.setText(vuelo.getDestino());
@@ -373,6 +426,25 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
         cajaTurista.setText(vuelo.getPlazasTurista().toString());
         cajaPrimera.setText(vuelo.getPlazasPrimera().toString());
     }//GEN-LAST:event_comboVuelosActionPerformed
+
+    private void botonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBorrarActionPerformed
+        reiniciarInterfaz();
+        rellenarComboVuelos();
+        jLabel1.setEnabled(true);
+        comboVuelos.setEnabled(true);
+        botonSiguiente.setEnabled(true);
+        botonSiguiente.setText("Borrar");
+    }//GEN-LAST:event_botonBorrarActionPerformed
+
+    private void botonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConsultarActionPerformed
+        reiniciarInterfaz();
+        jLabel4.setEnabled(true);
+        cajaDestino.setEnabled(true);
+        jLabel5.setEnabled(true);
+        cajaProcedencia.setEnabled(true);
+        botonSiguiente.setEnabled(true);
+        botonSiguiente.setText("Consultar");
+    }//GEN-LAST:event_botonConsultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -433,6 +505,8 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tablaVuelos;
     private javax.swing.JLabel textoError;
     // End of variables declaration//GEN-END:variables
 }
