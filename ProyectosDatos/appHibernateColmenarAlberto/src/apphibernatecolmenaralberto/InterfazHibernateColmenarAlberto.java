@@ -358,7 +358,6 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
                         cajaDestino.getText(), cajaProcedencia.getText(), Integer.parseInt(cajaFumador.getText()), 
                         Integer.parseInt(cajaNoFumador.getText()), Integer.parseInt(cajaTurista.getText()), 
                         Integer.parseInt(cajaPrimera.getText()));
-                comboVuelos.addItem(cajaCodigo.getText());
                 reiniciarInterfaz();
                 textoError.setText("Insertado correctamente");
             }
@@ -380,7 +379,7 @@ public class InterfazHibernateColmenarAlberto extends javax.swing.JFrame {
             reiniciarInterfaz();
             textoError.setText("Borrado correctamente");
         } else if (operacion.equals("Consultar")) {
-            DefaultTableModel tabla = AppHibernate.consultarVuelos("", "");
+            DefaultTableModel tabla = AppHibernate.consultarVuelos(cajaDestino.getText(), cajaProcedencia.getText());
             tablaVuelos.setModel(tabla);
         }
     }//GEN-LAST:event_botonSiguienteActionPerformed

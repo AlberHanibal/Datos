@@ -1,6 +1,5 @@
 package apphibernatecolmenaralberto;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Query;
@@ -85,7 +84,16 @@ public class AppHibernateColmenarAlberto {
     public DefaultTableModel consultarVuelos(String destino, String procedencia) {
         DefaultTableModel tabla = new DefaultTableModel();
         Session session = sesion.openSession();
-        Query q = session.createQuery("from Vuelos");
+        String consulta = "from Vuelos ";
+        
+        if (!destino.equals("") && (!procedencia.equals(""))) {
+            consulta += "where destino = '" + destino + "'and procedencia = '" + procedencia + "'";
+        } else if (!destino.equals("")) {
+            consulta += "where destino = '" + destino + "'";
+        } else if (!procedencia.equals("")) {
+            consulta += "where procedencia = '" + procedencia + "'";
+        }
+        Query q = session.createQuery(consulta);
         List <Vuelos> listaVuelo = q.list();
         
         tabla.addColumn("Código");
