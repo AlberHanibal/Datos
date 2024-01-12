@@ -43,6 +43,13 @@ public class Pasajeros implements Serializable {
     public Pasajeros() {
     }
 
+    public Pasajeros(PasajerosPK pasajerosPK, String tipoPlaza, String fumador, Vuelos vuelos) {
+        this.pasajerosPK = pasajerosPK;
+        this.tipoPlaza = tipoPlaza;
+        this.fumador = fumador;
+        this.vuelos = vuelos;
+    }
+
     public Pasajeros(PasajerosPK pasajerosPK) {
         this.pasajerosPK = pasajerosPK;
     }

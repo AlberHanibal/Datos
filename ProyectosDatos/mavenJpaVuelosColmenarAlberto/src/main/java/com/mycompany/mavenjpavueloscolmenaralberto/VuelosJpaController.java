@@ -211,4 +211,18 @@ public class VuelosJpaController implements Serializable {
         }
     }
     
+    public void modificarVuelo(Vuelos vuelo, String atributo, String valor) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        Vuelos vueloAModificar = em.find(Vuelos.class, vuelo.getCodVuelo());
+        if (atributo.equals("procedencia")) {
+            vueloAModificar.setProcedencia(valor);
+        } else if (atributo.equals("destino")) {
+            vueloAModificar.setDestino(valor);
+        } else if (atributo.equals("horaSalida")) {
+            vueloAModificar.setHoraSalida(valor);
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
 }

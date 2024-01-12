@@ -60,6 +60,20 @@ public class Vuelos implements Serializable {
     public Vuelos() {
     }
 
+    public Vuelos(String codVuelo, String horaSalida, String destino, String procedencia, Integer plazasFumador, Integer plazasNoFumador, Integer plazasTurista, Integer plazasPrimera, Collection<Pasajeros> pasajerosCollection) {
+        this.codVuelo = codVuelo;
+        this.horaSalida = horaSalida;
+        this.destino = destino;
+        this.procedencia = procedencia;
+        this.plazasFumador = plazasFumador;
+        this.plazasNoFumador = plazasNoFumador;
+        this.plazasTurista = plazasTurista;
+        this.plazasPrimera = plazasPrimera;
+        this.pasajerosCollection = pasajerosCollection;
+    }
+    
+    
+
     public Vuelos(String codVuelo) {
         this.codVuelo = codVuelo;
     }
@@ -158,7 +172,10 @@ public class Vuelos implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenjpavueloscolmenaralberto.Vuelos[ codVuelo=" + codVuelo + " ]";
+        return String.format("Código: %s%n"
+                            + "Hora de salida: %s%n"
+                            + "Destino: %s%n"
+                            + "Procedencia: %s%n", codVuelo, horaSalida, destino, procedencia);
     }
     
 }
